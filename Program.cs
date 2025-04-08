@@ -2,13 +2,13 @@
 {
     internal class Program
     {
-        const int MAX_ROOMS = 10;
-        static int[] roomNumbers = new int[MAX_ROOMS];
-        static double[] roomRates = new double[MAX_ROOMS];
-        static bool[] isReserved = new bool[MAX_ROOMS];
-        static string[] guestNames = new string[MAX_ROOMS];
-        static int[] nights = new int[MAX_ROOMS];
-        static DateTime[] bookingDates = new DateTime[MAX_ROOMS];
+        const int roomLimit = 10;   // Maximum number of rooms
+        static int[] roomNumbers = new int[roomLimit]; // Array to store room numbers
+        static double[] roomRates = new double[roomLimit]; // Array to store room rates
+        static bool[] isReserved = new bool[roomLimit]; // Array to store reservation status
+        static string[] guestNames = new string[roomLimit]; // Array to store guest names
+        static int[] nights = new int[roomLimit]; // Array to store number of nights
+        static DateTime[] bookingDates = new DateTime[roomLimit]; // Array to store booking dates
 
         static int roomCount = 0;
 
@@ -16,7 +16,7 @@
         {
             while (true)
             {
-                Console.WriteLine("\n--- Hotel Room Management System ---");
+                Console.WriteLine("\n============ Hotel Room Management System ============");
                 Console.WriteLine("1. Add a new room");
                 Console.WriteLine("2. View all rooms");
                 Console.WriteLine("3. Reserve a room");
@@ -59,10 +59,11 @@
             }
         }
 
+        /// ===================add a new room=====================
         static void AddRoom()
         {
             Console.Clear();
-            if (roomCount >= MAX_ROOMS)
+            if (roomCount >= roomLimit)
             {
                 Console.WriteLine("Room limit reached.");
                 return;
@@ -99,6 +100,7 @@
 
         }
 
+        /// ===================view all rooms=====================
         static void ViewRooms()
         {
             Console.Clear();
@@ -112,6 +114,8 @@
                     Console.WriteLine("Status: the room is Reserved by :");
                     Console.WriteLine("Guest Name: " + guestNames[i]);
                     Console.WriteLine("Nights: " + nights[i]);
+                    Console.WriteLine("Cost: " + (roomRates[i] * nights[i]));
+                    Console.WriteLine("Booking Date: " + bookingDates[i]);
 
                 }
                 else
@@ -123,6 +127,7 @@
 
         }
 
+        /// ===================reserve a room=====================
         static void ReserveRoom()
         {
             Console.Clear();
@@ -149,18 +154,29 @@
                         Console.WriteLine("Room is already reserved.");
                         return;
                     }
+
                     isReserved[i] = true;
                     guestNames[i] = guestName;
-                    nights[i] = numbernights; 
+                    nights[i] = numbernights;
+                    bookingDates[i] = DateTime.Now;
+
+
                     Console.WriteLine("Room reserved successfully.");
                     return;
                 }
+                else
+                {
+                    Console.WriteLine("Room not found.");
+                    return;
+                }
+
             }
 
             Console.ReadLine();
 
         }
 
+        /// ===================view all reservations=====================
         static void ViewReservations()
         {
             Console.Clear();
@@ -172,6 +188,7 @@
                     Console.WriteLine("Guest Name: " + guestNames[i]);
                     Console.WriteLine("Nights: " + nights[i]);
                     Console.WriteLine("Cost: " + (roomRates[i] * nights[i]));
+                    Console.WriteLine("Booking Date: " + bookingDates[i]);
 
                     Console.WriteLine();
                 }
@@ -179,6 +196,7 @@
             Console.ReadLine();
         }
 
+        /// ===================search reservation by guest name=====================
         static void SearchReservation()
         {
             Console.Clear();
@@ -193,7 +211,8 @@
                     Console.WriteLine("Room Number: " + roomNumbers[i]);
                     Console.WriteLine("Nights: " + nights[i]);
                     Console.WriteLine("Cost: " + (roomRates[i] * nights[i]));
-                   
+                    Console.WriteLine("Booking Date: " + bookingDates[i]);
+
                 }
                 else
                 {
@@ -206,6 +225,7 @@
 
         }
 
+        /// ===================find highest paying guest=====================
         static void FindHighestPayingGuest()
         {
             Console.Clear();
@@ -235,6 +255,7 @@
             Console.ReadLine();
         }
 
+        /// ===================cancel reservation by room number=====================
         static void CancelReservation()
         {
             Console.Clear();
